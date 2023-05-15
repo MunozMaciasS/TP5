@@ -133,7 +133,7 @@ class MyGame(arcade.Window):
        vous allez invoquer la méthode "update()" sur vos listes de sprites.
        Paramètre:
            - delta_time : le nombre de milliseconde depuis le dernier update.
-       """
+        """
        #vérifier si le jeu est actif (ROUND_ACTIVE) et continuer l'animation des attaques
        #si le joueur a choisi une attaque, générer une attaque de l'ordinateur et valider la victoire
        #changer l'état de jeu si nécessaire (GAME_OVER)
@@ -181,6 +181,13 @@ class MyGame(arcade.Window):
            - button: le bouton de la souris appuyé
            - key_modifiers: est-ce que l'usager appuie sur "shift" ou "ctrl" ?
        """
+
+       if self.rock.collides_with_point((x, y)):
+           pass
+       if self.paper.collides_with_point((x, y)):
+           pass
+       if self.scissors.collides_with_point((x, y)):
+           pass
 
        # Test de collision pour le type d'attaque (self.player_attack_type).
        # Rappel que si le joueur choisi une attaque, self.player_attack_chosen = True
