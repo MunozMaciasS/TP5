@@ -7,7 +7,7 @@ import random
 import arcade
 #import arcade.gui
 
-#from attack_animation import AttackType, AttackAnimation
+from attack_animation import AttackType, AttackAnimation
 from game_state import GameState
 from enum import enum
 
@@ -45,7 +45,7 @@ class MyGame(arcade.Window):
        self.scissors = None
        self.player_score = 0
        self.computer_score = 0
-       self.player_attack_type = {}
+       self.player_attack_type = {AttackType.ROCK,AttackType.PAPER,AttackType.SCISSORS}
        self.computer_attack_type = None
        self.player_attack_chosen = False
        self.player_won_round = None
@@ -69,6 +69,12 @@ class MyGame(arcade.Window):
        Utilisé pour déterminer qui obtient la victoire (ou s'il y a égalité)
        Rappel: après avoir validé la victoire, il faut changer l'état de jeu
        """
+       if self.player_score == 3 or self.computer_score == 3:
+           self.game_state = 3
+       else:
+           pass
+
+
 
 
    def draw_possible_attack(self):
@@ -135,7 +141,38 @@ class MyGame(arcade.Window):
            - delta_time : le nombre de milliseconde depuis le dernier update.
         """
        #vérifier si le jeu est actif (ROUND_ACTIVE) et continuer l'animation des attaques
+
        #si le joueur a choisi une attaque, générer une attaque de l'ordinateur et valider la victoire
+       while self.game_state == 1:
+           if self.player_attack_chosen == True:
+               pc_attack = randint(0, 2)
+               if pc_attack == 0:
+                   self.computer_attack_type = AttackType.ROCK
+               elif pc_attack == 1:
+                   self.computer_attack_type = AttackType.PAPER
+               else:
+                   self.computer_attack_type = AttackType.SCISSORS
+
+               if pc_attack == AttackType.ROCK and self.player_attack_type == AttackType.SCISSORS:
+                   self.computer_score += 1
+               elif pc_attack == AttackType.PAPER and self.player_attack_type == AttackType.ROCK:
+                   self.computer_score += 1
+               elif pc_attack == AttackType.SCISSORS and self.player_attack_type == AttackType.PAPER:
+                   self.computer_score += 1
+               elif self.player_attack_type == AttackType.ROCK and pc_attack == AttackType.SCISSORS:
+                   self.player_score += 1
+               elif self.player_attack_type == AttackType.PAPER and pc_attack == AttackType.ROCK:
+                   self.player_score += 1
+               elif self.player_attack_type == AttackType.SCISSORS and pc_attack == AttackType.PAPER:
+                   self.player_score += 1
+               elif self.player_attack_type == AttackType.PAPER and pc_attack == AttackType.ROCK:
+                   self.player_score += 1
+               elif self.player_attack_type == pc_attack:
+                   self.draw_round = True
+
+
+
+
        #changer l'état de jeu si nécessaire (GAME_OVER)
        pass
 
@@ -183,15 +220,29 @@ class MyGame(arcade.Window):
        """
 
        if self.rock.collides_with_point((x, y)):
-           pass
+           self.player_attack_chosen = True
        if self.paper.collides_with_point((x, y)):
-           pass
+           self.player_attack_chosen = True
        if self.scissors.collides_with_point((x, y)):
-           pass
+           self.player_attack_chosen = True
+
 
        # Test de collision pour le type d'attaque (self.player_attack_type).
+
+
        # Rappel que si le joueur choisi une attaque, self.player_attack_chosen = True
        pass
+
+
+def main():
+   """ Main method """
+   game = MyGame(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+   game.setup()
+   arcade.run()
+
+
+if __name__ == "__main__":
+   main()
 
 
 def main():
