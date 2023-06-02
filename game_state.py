@@ -1,8 +1,7 @@
 from enum import Enum
 
 class GameState(Enum):
-    def __int__(self):
-        self.NOT_STARTED = 0
-        self.ROUND_ACTIVE = 1
-        self.ROUND_DONE = 2
-        self.GAME_OVER = 3
+    NOT_STARTED = 0
+    ROUND_ACTIVE = 1
+    ROUND_DONE = 2
+    GAME_OVER = 3
