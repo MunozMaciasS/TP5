@@ -7,9 +7,9 @@ import random
 import arcade
 #import arcade.gui
 
-from attack_animation import AttackType, AttackAnimation
+from attack_animation import AttackType
 from game_state import GameState
-from enum import enum
+from enum import Enum
 
 SCREEN_WIDTH = 1024
 SCREEN_HEIGHT = 600
@@ -58,6 +58,11 @@ class MyGame(arcade.Window):
        fois si vous recommencer une nouvelle partie.
        """
        # C'est ici que vous allez créer vos listes de sprites et vos sprites.
+       self.compy = arcade.Sprite("Assetes/compy.png", 1.5, center_x= 800, center_y= 300)
+       self.faceBeard = arcade.Sprite("Assetes/faceBeard.png", 0.5, center_x= 200, center_y= 300)
+       self.scissors = arcade.Sprite("Assetes/scissors.png", 0.5, center_x=100, center_y=150)
+       self.spaper = arcade.Sprite("Assetes/spaper.png", 0.5, center_x= 200, center_y=150)
+       self.srock = arcade.Sprite("Assetes/srock.png", 0.5, center_x=300, center_y=150)
        # Prenez note que vous devriez attribuer une valeur à tous les attributs créés dans __init__
 
        pass
@@ -83,6 +88,11 @@ class MyGame(arcade.Window):
        (si aucune attaque n'a été sélectionnée, il faut dessiner les trois possibilités)
        (si une attaque a été sélectionnée, il faut dessiner cette attaque)
        """
+       self.scissors.draw()
+       self.spaper.draw()
+       self.srock.draw()
+
+
        pass
 
    def draw_computer_attack(self):
@@ -124,7 +134,8 @@ class MyGame(arcade.Window):
                         align="center")
 
        self.draw_instructions()
-       self.players.draw()
+       self.compy.draw()
+       self.faceBeard.draw()
        self.draw_possible_attack()
        self.draw_scores()
 
@@ -232,17 +243,6 @@ class MyGame(arcade.Window):
 
        # Rappel que si le joueur choisi une attaque, self.player_attack_chosen = True
        pass
-
-
-def main():
-   """ Main method """
-   game = MyGame(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-   game.setup()
-   arcade.run()
-
-
-if __name__ == "__main__":
-   main()
 
 
 def main():
